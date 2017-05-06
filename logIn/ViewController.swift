@@ -19,6 +19,37 @@ class ViewController: UIViewController {
     @IBOutlet var logInButton: UIButton!
     
     @IBAction func logIn(_ sender: Any) {
+        
+        //lets you access functions in app del
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        //lets you acces user data
+        let context = appDelegate.persistentContainer.viewContext
+        
+        //tells xcode where to save user data
+        let newValue = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
+        
+        newValue.setValue(textField.text, forKey: "name")
+        
+        //saves userdata then changes the alphas
+        do {
+            
+            try context.save()
+            
+            textField.alpha = 0
+            
+            logInButton.alpha = 0
+            
+            label.alpha = 1
+            
+            label.text = "Hi there " + textField.text! + "!"
+            
+        } catch {
+            
+            print("new name didn't save")
+            
+        }
+        
     }
     
     
